@@ -19787,8 +19787,6 @@
 	            refreshable: false
 	        });
 	    },
-	    componentDidMount: function componentDidMount() {},
-	    componentWillUnmount: function componentWillUnmount() {},
 	    handleTouchStart: function handleTouchStart(event) {
 	        var touch = event.touches[0];
 	        this.startX = touch.pageX;
@@ -19802,14 +19800,11 @@
 	        var distanceToRefresh = _props.distanceToRefresh;
 	        var resistance = _props.resistance;
 	
-	
 	        var touch = event.touches[0];
-	
 	        // This is a one time test
 	        if (this.isSwiping === undefined) {
 	            this.isSwiping = Math.abs(this.startX - touch.pageX) > Math.abs(this.startY - touch.pageY);
 	        }
-	
 	        if (this.isSwiping) {
 	            return;
 	        }
@@ -19817,31 +19812,20 @@
 	        if (touch.pageY < this.startY) {
 	            return;
 	        }
-	
 	        // Prevent native scrolling
 	        event.preventDefault();
-	
 	        this.deltaY = this.deltaY + (touch.pageY - this.lastY) * resistance;
 	        this.lastY = touch.pageY;
-	
-	        if (this.deltaY > distanceToRefresh) {
-	            this.setState({
-	                isDragging: true,
-	                refreshable: true
-	            });
-	        } else {
-	            this.setState({
-	                isDragging: true,
-	                refreshable: false
-	            });
-	        }
+	        this.setState({
+	            isDragging: true,
+	            refreshable: this.deltaY > distanceToRefresh
+	        });
 	    },
 	    handleTouchEnd: function handleTouchEnd() {
 	        if (this.isSwiping) {
 	            return;
 	        }
 	        var distanceToRefresh = this.props.distanceToRefresh;
-	
 	        // Quick movement
 	
 	        if (Math.abs(this.deltaY) > distanceToRefresh) {
@@ -19862,7 +19846,6 @@
 	
 	
 	        var translate = interpolatedStyle.translate > 50 ? interpolatedStyle.translate - 50 : 0;
-	
 	        return _react2.default.createElement(
 	            'div',
 	            { className: 'sq-ptr-header',
@@ -19878,7 +19861,6 @@
 	        );
 	    },
 	    renderContent: function renderContent(interpolatedStyle) {
-	
 	        var translate = interpolatedStyle.translate;
 	        var children = this.props.children;
 	
@@ -19899,9 +19881,7 @@
 	        var isDragging = _state2.isDragging;
 	        var loading = _state2.loading;
 	
-	
 	        var translate = this.deltaY || 0;
-	
 	        var motionStyle = isDragging ? {
 	            translate: translate
 	        } : loading ? {
@@ -19915,15 +19895,12 @@
 	                damping: 30
 	            })
 	        };
-	
 	        var touchEvents = {
 	            onTouchStart: this.handleTouchStart,
 	            onTouchMove: this.handleTouchMove,
 	            onTouchEnd: this.handleTouchEnd
 	        };
-	
 	        var props = (0, _blacklist2.default)(this.props, 'distanceToRefresh', 'resistance', 'onRefresh');
-	
 	        return _react2.default.createElement(
 	            'div',
 	            _extends({ className: 'sq-ptr' }, props, touchEvents),

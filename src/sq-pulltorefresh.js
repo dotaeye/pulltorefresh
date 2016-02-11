@@ -4,9 +4,7 @@ import ReactDOM, { findDOMNode } from 'react-dom';
 import blacklist from 'blacklist';
 import {Motion, spring} from 'react-motion';
 
-
 const PullToRefresh = React.createClass({
-
 
     getInitialState(){
         return {
@@ -44,14 +42,6 @@ const PullToRefresh = React.createClass({
         });
     },
 
-    componentDidMount () {
-
-    },
-
-    componentWillUnmount () {
-
-    },
-
     handleTouchStart(event) {
         const touch = event.touches[0];
         this.startX = touch.pageX;
@@ -64,14 +54,11 @@ const PullToRefresh = React.createClass({
     handleTouchMove(event){
 
         const { distanceToRefresh, resistance }=this.props;
-
         const touch = event.touches[0];
-
         // This is a one time test
         if (this.isSwiping === undefined) {
             this.isSwiping = Math.abs(this.startX - touch.pageX) > Math.abs(this.startY - touch.pageY);
         }
-
         if (this.isSwiping) {
             return;
         }
@@ -79,24 +66,14 @@ const PullToRefresh = React.createClass({
         if (touch.pageY < this.startY) {
             return;
         }
-
         // Prevent native scrolling
         event.preventDefault();
-
         this.deltaY = this.deltaY + (touch.pageY - this.lastY) * resistance;
         this.lastY = touch.pageY;
-
-        if (this.deltaY > distanceToRefresh) {
-            this.setState({
-                isDragging: true,
-                refreshable: true,
-            });
-        } else {
-            this.setState({
-                isDragging: true,
-                refreshable: false,
-            });
-        }
+        this.setState({
+            isDragging: true,
+            refreshable: this.deltaY > distanceToRefresh
+        });
 
     },
 
@@ -105,7 +82,6 @@ const PullToRefresh = React.createClass({
             return;
         }
         const { distanceToRefresh }=this.props;
-
         // Quick movement
         if (Math.abs(this.deltaY) > distanceToRefresh) {
             this.setState({
@@ -119,7 +95,6 @@ const PullToRefresh = React.createClass({
         });
     },
 
-
     renderHeader(interpolatedStyle) {
         const {
             refreshable,
@@ -128,7 +103,6 @@ const PullToRefresh = React.createClass({
             } = this.state;
 
         const translate = interpolatedStyle.translate > 50 ? interpolatedStyle.translate - 50 : 0;
-
         return (
             <div className='sq-ptr-header'
                  style={Object.assign({
@@ -141,7 +115,6 @@ const PullToRefresh = React.createClass({
     },
 
     renderContent(interpolatedStyle){
-
         const translate = interpolatedStyle.translate;
         const {children}=this.props;
         return (
@@ -160,9 +133,7 @@ const PullToRefresh = React.createClass({
             isDragging,
             loading,
             } = this.state;
-
         let translate = this.deltaY || 0;
-
         const motionStyle = isDragging ? {
             translate: translate
         } : (loading ? {
@@ -176,15 +147,12 @@ const PullToRefresh = React.createClass({
                 damping: 30
             })
         });
-
         const touchEvents = {
             onTouchStart: this.handleTouchStart,
             onTouchMove: this.handleTouchMove,
             onTouchEnd: this.handleTouchEnd
         };
-
         const props = blacklist(this.props, 'distanceToRefresh', 'resistance', 'onRefresh');
-
         return (
             <div className='sq-ptr' {...props} {...touchEvents}>
                 <Motion style={motionStyle}>
@@ -196,8 +164,6 @@ const PullToRefresh = React.createClass({
             </div>
         );
     }
-
 });
-
 
 export default PullToRefresh;
