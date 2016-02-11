@@ -1,0 +1,27 @@
+@import url("./mixin");
+//
+// PTR
+// ==============================
+@boxWarpPrefixCls: sq-ptr;
+
+.@{boxWarpPrefixCls} {
+
+  position: relative;
+  background: #333;
+  #flexbox .display-flex();
+
+  &-header{
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #fff;
+    width: 100%;
+    z-index: 10;
+    text-align: center;
+    height: 50px;
+  }
+  &-content{
+    background: #fff;
+    #flexbox .flex(1,1,0)
+  }
+}

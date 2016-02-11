@@ -1,0 +1,39 @@
+// Mixins
+// ------------------------------
+
+#flexbox {
+	.display-flex {
+		display: -webkit-flex;
+		display: -ms-flexbox;
+		display: flex;
+	}
+	.flex(@fg: 1, @fs: '', @fb: '') {
+		-webkit-flex: @fg @fs @fb;
+		-ms-flex: @fg @fs @fb;
+		flex: @fg @fs @fb;
+	}
+	.flex-direction(@value: row) {
+		-webkit-flex-direction: @value;
+		-ms-flex-direction: @value;
+		flex-direction: @value;
+	}
+	.align-items(@value: stretch) {
+		-webkit-align-items: @value;
+		align-items: @value;
+	}
+	.justify-content(@value: stretch) {
+		-webkit-justify-content: @value;
+		justify-content: @value;
+	}
+
+	/**
+	 * 1. fill available vertical space without resorting to "height: 100%", which
+	 *    yields undesirable results
+	 * 2. relatively positioned so ".NewView" descendents will fill correctly
+	 */
+
+	.flex-grow {
+	    #flexbox .flex(1,1,0); // 1
+		position: relative; // 2
+	}
+}
