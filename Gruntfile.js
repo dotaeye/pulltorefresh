@@ -96,6 +96,7 @@ module.exports = function (grunt) {
                 externals: {
                     react: 'React',
                     'react-dom': 'ReactDOM',
+                    'react-motion': 'reactMotion',
                     'classnames': 'classnames',
                     blacklist: 'blacklist'
                 }

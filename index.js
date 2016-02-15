@@ -1,1 +1,1 @@
-module.exports = require('./lib/sq-box');
+module.exports = require('./lib/sq-pulltorefresh');
