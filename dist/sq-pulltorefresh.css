@@ -5,17 +5,6 @@
 	 * 2. relatively positioned so ".NewView" descendents will fill correctly
 	 */
 }
-#flexbox .display-flex {
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-}
-#flexbox .flex-grow {
-  -webkit-flex: 1 1 0;
-  -ms-flex: 1 1 0;
-  flex: 1 1 0;
-  position: relative;
-}
 .sq-ptr {
   position: relative;
   background: #333;
