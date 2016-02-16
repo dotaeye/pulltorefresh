@@ -39,6 +39,14 @@ module.exports = function (grunt) {
                 }
             }
         },
+        babel: {
+            options: babelLoaderQuery,
+            dist: {
+                files: {
+                    'lib/sq-pulltorefresh.js': 'src/sq-pulltorefresh.js'
+                }
+            }
+        },
         webpack: {
         	dev: {
    				resolve: {
@@ -76,31 +84,6 @@ module.exports = function (grunt) {
                 },
                 devtool: 'source-map'
             },
-        	lib: {
-   				resolve: {
-                    extensions: ['', '.js', '.jsx']
-                },
-                entry: './src/sq-pulltorefresh.js',
-                output: {
-                    path: './lib',
-                    filename: 'sq-pulltorefresh.js'
-                },
-                module:{
-                	 loaders: [{
-                            test: /\.jsx?$/,
-                            exclude: /node_modules/,
-                            loaders: ['babel?' + JSON.stringify(babelLoaderQuery)]
-                        }
-                    ]
-                },
-                externals: {
-                    react: 'React',
-                    'react-dom': 'ReactDOM',
-                    'react-motion': 'reactMotion',
-                    'classnames': 'classnames',
-                    blacklist: 'blacklist'
-                }
-        	},
         	prod: {
 				resolve: {
                     extensions: ['', '.js', '.jsx']
@@ -132,5 +115,5 @@ module.exports = function (grunt) {
         	}
         }
     });
-	grunt.registerTask('default', ['clean', 'less:dev','less:example','less:prod','webpack:lib','webpack:dev','webpack:example','webpack:prod']);
+	grunt.registerTask('default', ['clean', 'less:dev','less:example','less:prod','babel','webpack:dev','webpack:example','webpack:prod']);
 }
