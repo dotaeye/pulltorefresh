@@ -1,6 +1,6 @@
 {
   "name": "sq-pulltorefresh",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "pulltorefresh for react component",
   "main": "index.js",
   "dependencies": {
